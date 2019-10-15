@@ -8,7 +8,7 @@ class PAequor {
 
   // Returns a random number between two paramters
   returnRandNum (low, high) {
-    const range = high - low
+    const range = high - low + 1
     return Math.floor(Math.random() * range) + low
   }
 
@@ -38,11 +38,45 @@ class PAequor {
     const newBaseIndex = (oldBaseIndex + this.returnRandNum(1, 3)) % 4
     console.log(`New Base = ${this.dnaBases[newBaseIndex]}`)
     // Replace old base with new
-    this.dna[indexToChange] = this.dna[newBaseIndex]
+    this.dna[indexToChange] = this.dnaBases[newBaseIndex]
+  }
+
+  // Compare DNA of two PAequor objects
+  compareDna (obj) {
+    let differences = 0
+    for (let i = 0; i < this.dnaLength; i++) {
+      console.log(`comparing position ${i}...`)
+      if (this.dna[i] !== obj.dna[i]) {
+        differences++
+        console.log(`position ${i} is not identical. Differences = ${differences}`)
+      } else {
+        console.log(`position ${i} is identical. Differences = ${differences}`)
+      }
+    }
+    console.log(`DNA sequence ${this.specimenNum} and DNA sequence ${obj.specimenNum} are ${((this.dnaLength - differences) / this.dnaLength) * 100}% the same`)
+  }
+
+  // Return true if 60% or more of all bases are C or G
+  willLikelySurvive () {
+    let count = 0
+    for (let i = 0; i < this.dnaLength; i++) {
+      if (this.dna[i] === 'C' || this.dna[i] === 'G') {
+        count++
+      }
+    }
+    console.log(`CG count = ${count}`)
+    if (count / this.dnaLength >= 0.60) {
+      return true
+    } else {
+      return false
+    }
   }
 }
 
+// testing
 const test = new PAequor(0)
+const test2 = new PAequor(1)
 console.log(test.dna)
-test.mutate()
-console.log(test.dna)
+console.log(test2.dna)
+console.log(test.willLikelySurvive())
+console.log(test2.willLikelySurvive())
