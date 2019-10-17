@@ -1,5 +1,5 @@
 class PAequor {
-  constructor (specimenNum, dnaSeq) {
+  constructor (specimenNum) {
     this.dnaBases = ['A', 'T', 'C', 'G']
     this.dnaLength = 15
     this.specimenNum = specimenNum
@@ -73,10 +73,12 @@ class PAequor {
   }
 }
 
-// testing
-const test = new PAequor(0)
-const test2 = new PAequor(1)
-console.log(test.dna)
-console.log(test2.dna)
-console.log(test.willLikelySurvive())
-console.log(test2.willLikelySurvive())
+const pAequorArr = []
+for (let i = 0; pAequorArr.length < 30; i++) {
+  const subject = new PAequor(i)
+  if (subject.willLikelySurvive()) {
+    pAequorArr.push(subject)
+  }
+  console.log(i)
+  console.log(pAequorArr.length)
+}
